@@ -15,4 +15,5 @@ class Category extends Model
         'id' => 'string'
     ];
 
+    public $incrementing = false;
 }
