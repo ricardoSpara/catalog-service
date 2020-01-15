@@ -32,6 +32,8 @@ class CategoryTest extends TestCase
             'name' => 'test'
         ]);
         $category->refresh();
+
+        $this->assertEquals(36, strlen($category->id)); 
         $this->assertEquals('test', $category->name);
         $this->assertNull($category->description);
         $this->assertTrue($category->is_active);
@@ -72,5 +74,16 @@ class CategoryTest extends TestCase
         foreach ($data as $key => $value) {
             $this->assertEquals($value, $category[$key]);
         }
+    }
+
+    public function testDelete()
+    {
+        $category = factory(Category::class)->create();
+        $category->delete();
+
+        $this->assertNull(Category::find($category->id));
+
+        $category->restore();
+        $this->assertNotNull(Category::find($category->id));
     }
 }
