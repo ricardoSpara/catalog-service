@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    
+
     private $rules = [
         'name' => 'required|max:255',
         'is_active' => 'boolean',
@@ -18,27 +18,30 @@ class CategoryController extends Controller
         return Category::all();
     }
 
-   
+
     public function store(Request $request)
     {
         $this->validate($request, $this->rules);
 
-        return Category::create($request->all());
-    }
+        $category = Category::create($request->all());
+        $category->refresh();
 
-  
-    public function show(Category $category)
-    {  
         return $category;
     }
 
-    
+
+    public function show(Category $category)
+    {
+        return $category;
+    }
+
+
     public function update(Request $request, Category $category)
     {
         $this->validate($request, $this->rules);
 
         $category->update($request->all());
-        
+
         return $category;
     }
 
